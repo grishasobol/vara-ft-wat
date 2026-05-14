@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = ["benchmark"]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+authors = ["Gregory Sobol <grishasobolo@gmail.com>"]
+repository = "https://github.com/grishasobol/vara-ft-wat"

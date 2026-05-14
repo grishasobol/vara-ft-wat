@@ -1,0 +1,30 @@
+[package]
+name = "vara-ft-wat-benchmark"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "CLI for measuring gas-per-op of the WAT VFT against the gear-bridges sails VFT."
+
+[[bin]]
+name = "bench"
+path = "src/main.rs"
+
+[dependencies]
+# gear-bridges VFT — pulled from the upstream repo at a pinned revision.
+# Exposes `vft::WASM_BINARY` thanks to the `wasm-binary` feature.
+vft = { git = "https://github.com/gear-tech/gear-bridges", rev = "1f5f61a969d01c5c3cb72b838e484cac5e93f5ff", features = ["wasm-binary"] }
+
+# Native gear test harness. We use it directly (not via sails-rs) to avoid a
+# version conflict — gear-bridges pins sails-rs to its own git branch, but
+# gtest is a regular published crate and is API-compatible with what we need.
+gtest = "=1.10.0"
+
+# For CLI args.
+clap = { version = "4", features = ["derive"] }
+
+[build-dependencies]
+# Compile wat/extended_vft.wat → wasm at build time. No external wat2wasm
+# binary needed.
+wat = "1"
